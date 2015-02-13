@@ -1,0 +1,153 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.2.js"></script>
+</head>
+<body>
+<table id="tblList"></table>
+<form id="frmCadastre">
+    <ul>
+        <li><label for="txtCtxt">Context:</label><select id="mySelect"></select></li>
+        <li><label for="txtName">Name:</label> <input type="text" id="txtName"/></li>
+        <li><input type="submit" value="Save" id="btnSave"/></li>
+    </ul>
+</form>
+</body>
+<script type="text/javascript">
+    var operation = "A"; //"A"=Adding; "E"=Editing
+    var selected_index = -1;
+    var tbClients = [];
+    var contextList = ["sap", "2s", "p&c"];
+    var mySelect = $('#mySelect');
+    $(function () {
+        $.each(contextList, function(val, text) {
+            mySelect.append(
+                    $('<option></option>').val(text).html(text)
+            );
+        });
+        var tbClients = [];
+    });
+
+    function isOptionAlreadySelected() {
+        var mySelect =  $("#mySelect option:selected");
+        if (mySelect.is(':disabled')) {
+            return true;
+        }
+        return false;
+    }
+    function disableSaveButton() {
+        $('#btnSave').attr('disabled', true);
+    }
+
+    function enableSaveButton() {
+        $('#btnSave').attr('disabled', false);
+    }
+
+    function isAnyOptionRemaining() {
+        var enabledItems = $('#mySelect option:not(:disabled)')
+        if (enabledItems.size() <= 0) {
+            return false;
+        }
+        return true;
+
+    }
+    function selectNextActiveOption() {
+        var enabledItems = $('#mySelect option:not(:disabled)')
+        if (enabledItems.size() > 0) {
+            enabledItems.first().attr('selected', 'selected');
+        }
+    }
+    function clearInput() {
+        $("#txtName").val("");
+    }
+    function disableSelectedOption() {
+        var mySelect =  $("#mySelect option:selected");
+        mySelect.attr('disabled','disabled').siblings();
+    }
+    function addRecordInMemory() {
+        var client = {
+            Ctxt: $( "#mySelect option:selected" ).text(),
+            Name: $("#txtName").val()
+        });
+        tbClients.push(client);
+    }
+
+    function updateUIForModification() {
+        disableSelectedOption();
+        if (!isAnyOptionRemaining()) {
+            disableSaveButton();
+        } else {
+            selectNextActiveOption();
+        }
+        clearInput();
+    }
+    function Add() {
+        addRecordInMemory();
+        if (isOptionAlreadySelected() ) {
+            return false;
+        }
+        updateUIForModification();
+        List();
+
+        return false;
+    }
+    function update() {
+        tbClients[selected_index] = JSON.stringify({
+            Ctxt: $( "#mySelect option:selected" ).text(),
+            Name: $("#txtName").val()
+        });//Alter the selected item on the table
+        updateUIForModification();
+        List();
+        operation = "A";
+        return false;
+    }
+
+    function enableRemovedOption(optionValue) {
+        var deletedItem = $("#mySelect").find('option[value="'+optionValue+'"]');
+        deletedItem.removeAttr("disabled");
+        deletedItem.attr('selected', 'selected');
+    }
+
+    function removeRecord(index) {
+        tbClients.splice(index, 1);
+    }
+
+    function Delete(index) {
+        var cli = JSON.parse(tbClients[index]);
+        enableRemovedOption(cli.Ctxt);
+        enableSaveButton();
+        selectNextActiveOption();
+        removeRecord(index);
+        alert("Client deleted.");
+        List();
+    }
+
+    function List() {
+        $("#tblList").html("");
+        $("#tblList").html("<thead><tr><th>ID</th><th>Name</th><th></th><th></th></thead><tbody></tbody>");
+        for (var i in tbClients) {
+            var cli = JSON.parse(tbClients[i]);
+            $("#tblList tbody").append("<tr><td>" + cli.Ctxt + "</td><td>" + cli.Name + "</td><td><img onclick='Edit("+i+")' id='btnEdit' src='edit.png' alt='Edit" + i + " class='btnEdit'/><img onclick='Delete("+i+")' src='delete.png' alt='Delete" + i + "' class='btnDelete'/></td></tr>");
+        }
+    }
+
+    $("#frmCadastre").bind("submit", function () {
+        if (operation == "A") {
+            return Add();
+        } else {
+            return update();
+        }
+    });
+
+    function Edit(index) {
+        operation = "E";
+        selected_index = index;
+        var cli = JSON.parse(tbClients[selected_index]);
+        enableRemovedOption(cli.Ctxt);
+        enableSaveButton();
+        $("#txtName").val(cli.Name);
+        $("#txtName").focus();
+    };
+
+</script>
+</html>

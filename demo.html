@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS ui-select</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="public/lib/jquery-ui/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="public/lib/angular-ui-layout/ui-layout.css"/>
+    <link rel="stylesheet" href="style.css"/>
+
+    <script type="text/javascript" src="public/lib/blob-stream/blob-stream.js"></script>
+    <script type="text/javascript" src="public/lib/pdfkit/pdfkit.js"></script>
+    <script type="text/javascript" src="public/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="public/lib/jquery-ui/jquery-ui.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
+<script type="text/javascript" src="public/lib/angular-ui-date/src/date.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-shim.js"></script>
+    <script type="text/javascript" src="public/lib/angular-ui-layout/ui-layout.js"></script>
+
+
+
+  <!-- ui-select files -->
+  <script src="../dist/select.js"></script>
+  <link rel="stylesheet" href="../dist/select.css">
+
+  <script src="demo.js"></script>
+
+  <!-- Select2 theme -->
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+
+  <!--
+    Selectize theme
+    Less versions are available at https://github.com/brianreavis/selectize.js/tree/master/dist/less
+  -->
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+  <!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.bootstrap2.css"> -->
+  <!-- <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.bootstrap3.css"> -->
+    <script src="demo.js"></script>
+
+  <style>
+    body {
+      padding: 15px;
+    }
+
+    .select2 > .select2-choice.ui-select-match {
+      /* Because of the inclusion of Bootstrap */
+      height: 29px;
+    }
+
+    .selectize-control > .selectize-dropdown {
+      top: 36px;
+    }
+  </style>
+</head>
+
+<body ng-controller="DemoCtrl">
+
+  <button class="btn btn-default btn-xs" ng-click="enable()">Enable ui-select</button>
+  <button class="btn btn-default btn-xs" ng-click="disable()">Disable ui-select</button>
+  <button class="btn btn-default btn-xs" ng-click="clear()">Clear ng-model</button>
+
+  <!--<h3>Select2 theme</h3>-->
+  <!--<div>-->
+    <!--<ul>Accounts: <select ng-model="accounts.selected" ng-options="account.name for account in accounts"></select>  </ul>-->
+  <!--<ul>Customer-->
+    <!--<select ng-model="customers.selected" ng-options="cust.name for cust in customers"></select>  </ul>-->
+    <!--<ul>StartDate: <input ui-date ng-model="startDate"/></ul>-->
+      <!--<ul>EndDate: <input ui-date ng-model="endDate"/></ul>-->
+      <!--<ul>No. of Days : <input type="text" ng-model="noOfDays" only-digits></ul>-->
+      <!--<ul>Rate : <input type="text" ng-model="rate" only-digits></ul>-->
+  <!--</div>-->
+  <!--<p>Selected Customer: {{customers.selected.name}} and id {{customers.selected.id}}</p>-->
+  <!--<p>Selected Account: {{accounts.selected.name}}</p>-->
+  <!--<p>StartDate: {{startDate}}</p>-->
+  <!--<p>EndDate: {{endDate}}</p>-->
+  <!--<p>No. of Days: {{noOfDays}}</p>-->
+  <!--<p>Rate: {{rate}}</p>-->
+  <!--<p>Net: {{rate * noOfDays}}</p>-->
+  <!--<p>VAT: {{rate * noOfDays *20 / 100}}</p>-->
+  <!--<p>Total: {{(rate * noOfDays *20 / 100) + (rate * noOfDays)}}</p>-->
+
+  <div id="layout">
+  <div ui-layout>
+      <div ui-layout-container resizable="false" closable="false">
+          <h3 class="text-center">{{company.name}}</h3>
+          <h4 class="text-center">{{company.address.addressLine1}}</h4>
+          <h4 class="text-center">{{company.address.city}}</h4>
+          <h4 class="text-center">{{company.address.postCode}}</h4>
+      </div>
+
+
+      <div ui-layout-container>
+          <h4 class="text-right">Date: {{invoiceDetails.date}}</h4>
+          <h4 class="text-right">Invoice Number: {{invoiceDetails.invoiceNumber}}</h4>
+          <h4 class="text-right">VAT NO: {{company.vat.vatno}}</h4>
+          <h4 class="text-right">Company Number: {{company.companyNumber}}</h4>
+      </div>
+
+      <div ui-layout-container>
+          <table id="example" class="table table-bordered">
+              <thead>
+              <tr>
+                  <th>Client</th>
+                  <th>Period Start</th>
+                  <th>Period End</th>
+                  <th>No. of Days</th>
+                  <th>Rate</th>
+                  <th>Amount</th>
+              </tr>
+              </thead>
+
+              <tfoot>
+              <tr>
+                  <th colspan="5">Other Expenses</th>
+                  <th>100</th>
+              </tr>
+              <tr>
+                  <th colspan="4"></th>
+                  <th>Vat</th>
+                  <th>80</th>
+              </tr>
+              <tr>
+                  <th colspan="4"></th>
+                  <th >Total</th>
+                  <th>480</th>
+              </tr>
+              </tfoot>
+              <tbody>
+              <tr>
+                  <td>ABC</td>
+                  <td>20-01-2015</td>
+                  <td>20-02-2015</td>
+                  <td>30</td>
+                  <td>10</td>
+                  <td>300</td>
+              </tr>
+              <tr>
+                  <td>DEF</td>
+                  <td>20-01-2015</td>
+                  <td>20-02-2015</td>
+                  <td>30</td>
+                  <td>10</td>
+                  <td>300</td>
+              </tr>
+              </tbody>
+          </table>
+      </div>
+
+      <div ui-layout-container>
+          <h4 class="text-left">Bank Name: {{account.name}}</h4>
+          <h4 class="text-left">A/C No.: {{account.number}}</h4>
+          <h4 class="text-left">A/C No.: {{account.branch}}</h4>
+          <h4 class="text-left">A/C No.: {{account.sortcode}}</h4>
+          <button class="btn btn-default btn-xs" ng-click="generatePdf()">Generate Pdf</button>
+      </div>
+  </div>
+  </div>
+</body>
+</html>

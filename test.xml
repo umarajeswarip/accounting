@@ -1,0 +1,123 @@
+<div id="_title_fu_com_gistworld_primary_customerportal_domain_Country_id"
+     class="ui-accordion ui-widget ui-helper-reset">
+    <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-accordion-header-active ui-state-active ui-corner-top ui-accordion-icons">
+        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s"></span>Update Country
+    </h3>
+    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active">
+        <form id="fu_com_gistworld_primary_customerportal_domain_Country_form" action="/PrimaryCustomerPortal/countrys"
+              method="post" enctype="application/x-www-form-urlencoded" novalidate="novalidate">
+            <input type="hidden" name="_method" value="PUT">
+            <div id="_c_com_gistworld_primary_customerportal_domain_Country_isoCode_id">
+                <label style="width: 180px" for="_isoCode_id" class="formlabel">Iso Code:
+                </label>
+                <input id="_isoCode_id" name="isoCode" type="text" value="UK" class="required">
+                <br>
+                <script type="text/javascript">
+                    $(function() {
+                    $("#_isoCode_id").inputfield({
+                    'required' : true,
+                    'minlength': 0,
+                    'maxlength': 0,
+                    'mindecimal': null,
+                    'maxdecimal': null,
+                    'number' : false,
+                    'regex': '',
+                    'tooltip': ''
+                    });
+                    });
+
+                    //Spring.addDecoration(new Spring.ElementDecoration({elementId : '_isoCode_id', widgetType :
+                    'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: 'Enter Iso Code (required)',
+                    invalidMessage: 'Please enter valid Iso Code', required : true, missingMessage : 'required' }}));
+                </script>
+            </div>
+            <br>
+            <div id="_c_com_gistworld_primary_customerportal_domain_Country_iso3AlphaCode_id">
+                <label style="width: 180px" for="_iso3AlphaCode_id" class="formlabel">Iso3 Alpha Code:
+                </label>
+                <input id="_iso3AlphaCode_id" name="iso3AlphaCode" type="text" value="UK" class="required">
+                <br>
+                <script type="text/javascript">
+                    $(function() {
+                    $("#_iso3AlphaCode_id").inputfield({
+                    'required' : true,
+                    'minlength': 0,
+                    'maxlength': 0,
+                    'mindecimal': null,
+                    'maxdecimal': null,
+                    'number' : false,
+                    'regex': '',
+                    'tooltip': ''
+                    });
+                    });
+
+                    //Spring.addDecoration(new Spring.ElementDecoration({elementId : '_iso3AlphaCode_id', widgetType :
+                    'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: 'Enter Iso3 Alpha Code (required)',
+                    invalidMessage: 'Please enter valid Iso3 Alpha Code', required : true, missingMessage : 'required'
+                    }}));
+                </script>
+            </div>
+            <br>
+            <div id="_c_com_gistworld_primary_customerportal_domain_Country_name_id">
+                <label style="width: 180px" for="_name_id" class="formlabel">Name:
+                </label>
+                <input id="_name_id" name="name" type="text" value="United Kingdom" class="required">
+                <br>
+                <script type="text/javascript">
+                    $(function() {
+                    $("#_name_id").inputfield({
+                    'required' : true,
+                    'minlength': 0,
+                    'maxlength': 0,
+                    'mindecimal': null,
+                    'maxdecimal': null,
+                    'number' : false,
+                    'regex': '',
+                    'tooltip': ''
+                    });
+                    });
+
+                    //Spring.addDecoration(new Spring.ElementDecoration({elementId : '_name_id', widgetType :
+                    'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: 'Enter Name (required)',
+                    invalidMessage: 'Please enter valid Name', required : true, missingMessage : 'required' }}));
+                </script>
+            </div>
+            <br>
+            <div id="_c_com_gistworld_primary_customerportal_domain_Country_iso2AlphaCode_id">
+                <label style="width: 180px" for="_iso2AlphaCode_id" class="formlabel">Iso2 Alpha Code:
+                </label>
+                <input id="_iso2AlphaCode_id" name="iso2AlphaCode" type="text" value="UK" class="required">
+                <br>
+                <script type="text/javascript">
+                    $(function() {
+                    $("#_iso2AlphaCode_id").inputfield({
+                    'required' : true,
+                    'minlength': 0,
+                    'maxlength': 0,
+                    'mindecimal': null,
+                    'maxdecimal': null,
+                    'number' : false,
+                    'regex': '',
+                    'tooltip': ''
+                    });
+                    });
+
+                    //Spring.addDecoration(new Spring.ElementDecoration({elementId : '_iso2AlphaCode_id', widgetType :
+                    'dijit.form.ValidationTextBox', widgetAttrs : {promptMessage: 'Enter Iso2 Alpha Code (required)',
+                    invalidMessage: 'Please enter valid Iso2 Alpha Code', required : true, missingMessage : 'required'
+                    }}));
+                </script>
+            </div>
+            <br>
+            <div id="fu_com_gistworld_primary_customerportal_domain_Country_submit" class="submit">
+                <input value="Save" type="submit" id="proceed">
+                <button onclick="window.location = '/PrimaryCustomerPortal/countrys';" type="button">Cancel</button>
+            </div>
+            <input id="_id_id" name="id" type="hidden" value="17501">
+            <input id="_Version_id" name="Version" type="hidden" value="0">
+        </form>
+        <script type="text/javascript">$(function() {
+            $("form#fu_com_gistworld_primary_customerportal_domain_Country_form").validate({ignoreTitle: true}); });
+        </script>
+    </div>
+</div>
