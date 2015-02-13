@@ -122,7 +122,7 @@ app.controller('DemoCtrl', function($scope, $http, $timeout) {
     $scope.company = {
         id: 1,
         name: "Meena Soft Ltd",
-        address: {addressLine1: "163 Sixth Avenue", addressLine2: "Manor Park", city: "London", postCode: "E12 5PT"},
+        address: {addressLine1: "Line1", addressLine2: "Town", city: "City", postCode: "Pc1"},
         companyNumber: "15",
         vat: {
             id: 1,
