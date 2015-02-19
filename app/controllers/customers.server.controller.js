@@ -4,8 +4,12 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+    ObjectID = require('mongodb').ObjectID,
 	errorHandler = require('./errors.server.controller'),
 	Customer = mongoose.model('Customer'),
+    Organisation = mongoose.model('Organisation'),
+    Account = mongoose.model('Account'),
+    Invoice = mongoose.model('Invoice'),
 	_ = require('lodash');
 
 /**
@@ -21,7 +25,25 @@ exports.customerCreate = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.json(customer);
+            var invoice = new Invoice( {
+                organisation: new ObjectID.createFromHexString('54e5b9dcb730d0e81c4e1e29'),
+                account: new ObjectID.createFromHexString('54e5ce8b9065b9d8287c47b1'),
+                invoiceDetails: [{
+                    startDate: Date.now(),
+                    endDate: Date.now(),
+                    noOfDays: 10,
+                    rate: 100,
+                    customer:new ObjectID.createFromHexString('54d22e09fb082ff8085d2a93')
+            }]
+            });
+            invoice.save(function(err) {
+                if (err) {
+                    return res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                }
+                res.json(customer);
+            });
 		}
 	});
 };
@@ -88,12 +110,19 @@ exports.customerList = function(req, res) {
  * Article middleware
  */
 exports.customerByID = function(req, res, next, id) {
-	Customer.findById(id).populate('user', 'displayName').exec(function(err, customer) {
-		if (err) return next(err);
-		if (!customer) return next(new Error('Failed to load customer ' + id));
-		req.customer = customer;
-		next();
-	});
+    Invoice.findById( new ObjectID.createFromHexString('54e5f6d55d74bb9c260659e9')).populate('organisation').populate('account').exec(function(err, invoice) {
+        if (err) return next(err);
+        if (! invoice) return next(new Error('Failed to load invoice 54e5b9dcb730d0e81c4e1e29'));
+        console.log(invoice);
+        console.log(invoice.organisation);
+        console.log(invoice.account);
+        Customer.findById(id).populate('user', 'displayName').exec(function(err, customer) {
+            if (err) return next(err);
+            if (!customer) return next(new Error('Failed to load customer ' + id));
+            req.customer = customer;
+            next();
+        });
+    });
 };
 
 /**

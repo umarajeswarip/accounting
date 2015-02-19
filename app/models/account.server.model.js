@@ -20,6 +20,12 @@ var AccountSchema = new Schema({
 		trim: true,
 		required: 'Name cannot be blank'
 	},
+    branch: {
+        type: String,
+        default: '',
+        trim: true,
+        required: 'Branch cannot be blank'
+    },
     sortCode: {
         type: String,
         default: '',

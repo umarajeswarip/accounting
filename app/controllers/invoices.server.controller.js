@@ -5,102 +5,102 @@
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
-	Account = mongoose.model('Account'),
+	Invoice = mongoose.model('Invoice'),
 	_ = require('lodash');
 
 /**
- * Create a Account
+ * Create a Invoice
  */
 exports.create = function(req, res) {
-	var account = new Account(req.body);
-	account.user = req.user;
+	var invoice = new Invoice(req.body);
+	invoice.user = req.user;
 
-	account.save(function(err) {
+	invoice.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(account);
+			res.jsonp(invoice);
 		}
 	});
 };
 
 /**
- * Show the current Account
+ * Show the current Invoice
  */
 exports.read = function(req, res) {
-	res.jsonp(req.account);
+	res.jsonp(req.invoice);
 };
 
 /**
- * Update a Account
+ * Update a Invoice
  */
 exports.update = function(req, res) {
-	var account = req.account ;
+	var invoice = req.invoice ;
 
-	account = _.extend(account , req.body);
+	invoice = _.extend(invoice , req.body);
 
-	account.save(function(err) {
+	invoice.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(account);
+			res.jsonp(invoice);
 		}
 	});
 };
 
 /**
- * Delete an Account
+ * Delete an Invoice
  */
 exports.delete = function(req, res) {
-	var account = req.account ;
+	var invoice = req.invoice ;
 
-	account.remove(function(err) {
+	invoice.remove(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(account);
+			res.jsonp(invoice);
 		}
 	});
 };
 
 /**
- * List of Accounts
+ * List of Invoices
  */
 exports.list = function(req, res) { 
-	Account.find().sort('-created').populate('user', 'displayName').exec(function(err, accounts) {
+	Invoice.find().sort('-created').populate('user', 'displayName').exec(function(err, invoices) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(accounts);
+			res.jsonp(invoices);
 		}
 	});
 };
 
 /**
- * Account middleware
+ * Invoice middleware
  */
-exports.accountByID = function(req, res, next, id) { 
-	Account.findById(id).populate('user', 'displayName').exec(function(err, account) {
+exports.invoiceByID = function(req, res, next, id) { 
+	Invoice.findById(id).populate('user', 'displayName').exec(function(err, invoice) {
 		if (err) return next(err);
-		if (! account) return next(new Error('Failed to load Account ' + id));
-		req.account = account ;
+		if (! invoice) return next(new Error('Failed to load Invoice ' + id));
+		req.invoice = invoice ;
 		next();
 	});
 };
 
 /**
- * Account authorization middleware
+ * Invoice authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.account.user.id !== req.user.id) {
+	if (req.invoice.user.id !== req.user.id) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();
