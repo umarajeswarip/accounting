@@ -4,8 +4,8 @@
 angular.module('organisations').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items
-		Menus.addMenuItem('Organisation', 'Organisations', 'organisations', 'dropdown', '/organisations(/create)?');
-		Menus.addSubMenuItem('Organisation', 'organisations', 'List Organisations', 'organisations');
-		Menus.addSubMenuItem('Organisation', 'organisations', 'New Organisation', 'organisations/create');
+		Menus.addMenuItem('topbar', 'Organisations', 'organisations', 'dropdown', '/organisations(/create)?');
+		Menus.addSubMenuItem('topbar', 'organisations', 'List Organisations', 'organisations');
+		Menus.addSubMenuItem('topbar', 'organisations', 'New Organisation', 'organisations/create');
 	}
 ]);

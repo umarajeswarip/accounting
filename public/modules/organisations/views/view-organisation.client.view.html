@@ -1,6 +1,13 @@
 <section data-ng-controller="OrganisationsController" data-ng-init="findOne()">
 	<div class="page-header">
 		<h1 data-ng-bind="organisation.name"></h1>
+        <h1 data-ng-bind="organisation.companyNumber"></h1>
+        <h1 data-ng-bind="organisation.vatNumber"></h1>
+        <h2 data-ng-bind="organisation.address.addressLine1"></h2>
+        <h2 data-ng-bind="organisation.address.addressLine2"></h2>
+        <h2 data-ng-bind="organisation.address.city"></h2>
+        <h2 data-ng-bind="organisation.address.country"></h2>
+        <h2 data-ng-bind="organisation.address.postCode"></h2>
 	</div>
 	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == organisation.user._id))">
 		<a class="btn btn-primary" href="/#!/organisations/{{organisation._id}}/edit">

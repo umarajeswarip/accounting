@@ -11,6 +11,13 @@
 				<span data-ng-bind="organisation.user.displayName"></span>
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="organisation.name"></h4>
+            <h4 class="list-group-item-heading" data-ng-bind="organisation.companyNumber"></h4>
+            <h4 class="list-group-item-heading" data-ng-bind="organisation.vatNumber"></h4>
+            <h5 class="list-group-item-heading" data-ng-bind="organisation.address.addressLine1"></h5>
+            <h5 class="list-group-item-heading" data-ng-bind="organisation.address.addressLine2"></h5>
+            <h5 class="list-group-item-heading" data-ng-bind="organisation.address.city"></h5>
+            <h5 class="list-group-item-heading" data-ng-bind="organisation.address.country"></h5>
+            <h5 class="list-group-item-heading" data-ng-bind="organisation.address.postCode"></h5>
         </a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!organisations.$resolved || organisations.length">

@@ -9,7 +9,16 @@ angular.module('organisations').controller('OrganisationsController', ['$scope',
 		$scope.create = function() {
 			// Create new Organisation object
 			var organisation = new Organisations ({
-				name: this.name
+				name: this.name,
+                companyNumber: this.companyNumber,
+                vatNumber: this.vatNumber,
+                address: {
+                    addressLine1: this.address.addressLine1,
+                    addressLine2: this.address.addressLine2,
+                    city: this.address.city,
+                    country: this.address.country,
+                    postCode: this.address.postCode
+                }
 			});
 
 			// Redirect after save
