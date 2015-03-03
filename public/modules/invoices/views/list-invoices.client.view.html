@@ -4,13 +4,8 @@
     </div>
     <div class="list-group">
         <a data-ng-repeat="invoice in invoices" data-ng-href="#!/invoices/{{invoice._id}}" class="list-group-item">
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="invoice.created | date:'medium'"></span>
-				by
-				<span data-ng-bind="invoice.user.displayName"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="invoice.name"></h4>
+			<h4 class="list-group-item-heading" data-ng-bind="invoice.invoiceDate | date:'medium'"></h4>
+            <h4 class="list-group-item-heading" data-ng-bind="invoice.account.name"></h4>
         </a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!invoices.$resolved || invoices.length">

@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Invoice = mongoose.model('Invoice'),
+    Organisation = mongoose.model('Organisation'),
 	_ = require('lodash');
 
 /**
@@ -13,7 +14,10 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var invoice = new Invoice(req.body);
+    console.log(invoice);
 	invoice.user = req.user;
+    var organisation = Organisation.findById(req.user.id);
+    invoice.organisation = organisation._id;
 
 	invoice.save(function(err) {
 		if (err) {
@@ -88,7 +92,7 @@ exports.list = function(req, res) {
  * Invoice middleware
  */
 exports.invoiceByID = function(req, res, next, id) { 
-	Invoice.findById(id).populate('user', 'displayName').exec(function(err, invoice) {
+	Invoice.findById(id).populate('user', 'displayName').populate('account').exec(function(err, invoice) {
 		if (err) return next(err);
 		if (! invoice) return next(new Error('Failed to load Invoice ' + id));
 		req.invoice = invoice ;

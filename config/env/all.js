@@ -15,8 +15,11 @@ module.exports = {
 			css: [
 				'public/lib/bootstrap/dist/css/bootstrap.css',
 				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+                'public/lib/jquery-ui/themes/smoothness/jquery-ui.css'
 			],
 			js: [
+                'public/lib/jquery/dist/jquery.js',
+                'public/lib/jquery-ui/jquery-ui.js',
 				'public/lib/angular/angular.js',
 				'public/lib/angular-resource/angular-resource.js', 
 				'public/lib/angular-cookies/angular-cookies.js', 
@@ -30,7 +33,8 @@ module.exports = {
                 'public/lib/jspdf.plugin.standard_fonts_metrics.js',
                 'public/lib/jspdf.plugin.split_text_to_size.js',
                 'public/lib/jspdf.plugin.from_html.js',
-                'public/lib/filesaver/FileSaver.js'
+                'public/lib/filesaver/FileSaver.js',
+                'public/lib/angular-ui-date/src/date.js'
 			]
 		},
 		css: [

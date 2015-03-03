@@ -1,4 +1,4 @@
-<section data-ng-controller="InvoicesController">
+<section data-ng-controller="InvoicesController" data-ng-init="initializeInvoiceUI()">
     <div class="page-header">
         <h1>New Invoice</h1>
     </div>
@@ -6,11 +6,68 @@
         <form class="form-horizontal" data-ng-submit="create()" novalidate>
             <fieldset>
                 <div class="form-group">
-                    <label class="control-label" for="name">Name</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required>
+                        <ul>Accounts: <select ng-model="selectedAccount" ng-options="account.name for account in accounts"></select>  </ul>
+                        <ul>Invoice Date: <input ui-date ng-model="invoiceElement.invoiceDate"/></ul>
+                        <ul>Customer
+                        <select ng-model="selectedCustomer" ng-options="cust.name for cust in customers"></select>  </ul>
+                        <ul>StartDate: <input ui-date ng-model="currentInvoiceDetail.startDate"/></ul>
+                        <ul>EndDate: <input ui-date ng-model="currentInvoiceDetail.endDate"/></ul>
+                        <ul>No. of Days : <input type="text" ng-model="currentInvoiceDetail.noOfDays" only-digits></ul>
+                        <ul>Rate : <input type="text" ng-model="currentInvoiceDetail.rate" only-digits></ul>
+                        <button class="btn btn-default btn-xs">Save</button>
+                        <button type="button" class="btn btn-default btn-xs" ng-click="addInvoice()">Add Invoice Detail</button>
                     </div>
+                        <p>Selected Customer: {{customers.selected.name}} and id {{customers.selected.id}}</p>
+                        <p>Selected Account: {{accounts.selected.name}}</p>
+                        {{invoiceElement.invoiceDetails}}
                 </div>
+                <li ng-repeat="invoiceDetail in invoiceElement.invoiceDetails track by $index">
+                    <ol>{{invoiceDetail.startDate}}</ol>
+                </li>
+                <div>
+                    <table id="example" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Period Start</th>
+                            <th>Period End</th>
+                            <th>No. of Days</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
+                        </tr>
+                        </thead>
+
+                        <tfoot>
+                        <tr>
+                            <th colspan="5">Other Expenses</th>
+                            <th>100</th>
+                        </tr>
+                        <tr>
+                            <th colspan="4"></th>
+                            <th>Vat</th>
+                            <th>80</th>
+                        </tr>
+                        <tr>
+                            <th colspan="4"></th>
+                            <th >Total</th>
+                            <th>480</th>
+                        </tr>
+                        </tfoot>
+                        <tbody ng-repeat="invoiceDetail in invoiceElement.invoiceDetails track by $index">
+                            <tr>
+                                <td>{{invoiceDetail.customer.name}}</td>
+                                <td>{{invoiceDetail.startDate}}</td>
+                                <td>{{invoiceDetail.endDate}}</td>
+                                <td>{{invoiceDetail.noOfDays}}</td>
+                                <td>{{invoiceDetail.rate}}</td>
+                                <td>{{invoiceDetail.total}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
                 <div class="form-group">
                     <input type="submit" class="btn btn-default">
                 </div>

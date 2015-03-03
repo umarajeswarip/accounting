@@ -12,10 +12,53 @@
 	</div>
 	<small>
 		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="invoice.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="invoice.user.displayName"></span>
+            <div class="form-group">
+                <div class="controls">
+                    <ul>Invoice Date:  {{invoice.invoiceDate | date : "dd/MM/yyyy"}}</ul>
+                    <ul>Account:  {{invoice.account.name}}</ul>
+                </div>
+            </div>
+            <div>
+                <table id="example" class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Period Start</th>
+                        <th>Period End</th>
+                        <th>No. of Days</th>
+                        <th>Rate</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+
+                    <tfoot>
+                    <tr>
+                        <th colspan="5">Other Expenses</th>
+                        <th>100</th>
+                    </tr>
+                    <tr>
+                        <th colspan="4"></th>
+                        <th>Vat</th>
+                        <th>{{invoice.total * 20 / 100}}</th>
+                    </tr>
+                    <tr>
+                        <th colspan="4"></th>
+                        <th >Total</th>
+                        <th>{{invoice.total + (invoice.total * 20 / 100)}}</th>
+                    </tr>
+                    </tfoot>
+                    <tbody ng-repeat="invoiceDetail in invoice.invoiceDetails track by $index">
+                    <tr>
+                        <td>{{invoiceDetail.customer.name}}</td>
+                        <td>{{invoiceDetail.startDate | date : "dd/MM/yyyy"}}</td>
+                        <td>{{invoiceDetail.endDate | date : "dd/MM/yyyy"}}</td>
+                        <td>{{invoiceDetail.noOfDays}}</td>
+                        <td>{{invoiceDetail.rate}}</td>
+                        <td>{{invoiceDetail.total}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 		</em>
 	</small>
 </section>

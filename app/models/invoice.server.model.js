@@ -11,12 +11,20 @@ var mongoose = require('mongoose'),
  */
 var InvoiceSchema = new Schema({
     organisation: {
-        type: Schema.ObjectId,
+        type: String,
         ref: 'Organisation'
     },
     account: {
-        type: Schema.ObjectId,
+        type: String,
         ref: 'Account'
+    },
+    invoiceDate: {
+        type: Date,
+        ref: 'Invoice date required'
+    },
+    total: {
+        type: Number,
+        ref: 'Total required'
     },
     invoiceDetails: [{
         startDate: {
@@ -31,13 +39,23 @@ var InvoiceSchema = new Schema({
             type: Number,
             required: 'Rate required'
         },
+        total: {
+            type: Number,
+            required: 'Total required'
+        },
         noOfDays: {
             type: Number,
             required: 'No. of days required'
         },
         customer: {
-            type: Schema.ObjectId,
-            ref: 'Customer'
+            name: {
+                type: String,
+                required: 'Customer Name required'
+            },
+            id: {
+                type: String,
+                ref: 'Customer'
+            }
         }
     }],
     otherExpenses :[{
