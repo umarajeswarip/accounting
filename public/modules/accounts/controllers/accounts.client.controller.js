@@ -1,7 +1,7 @@
 'use strict';
 
 // Accounts controller
-angular.module('accounts').controller('AccountsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Accounts',
+angular.module('accounts').controller('AccountsController', ['$scope', '$stateParams', '$location', 'Authentication', 'accountService',
 	function($scope, $stateParams, $location, Authentication, accountService) {
 		$scope.authentication = Authentication;
 
