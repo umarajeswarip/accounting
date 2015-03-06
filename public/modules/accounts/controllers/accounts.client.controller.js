@@ -8,17 +8,21 @@ angular.module('accounts').controller('AccountsController', ['$scope', '$statePa
         $scope.authentication = Authentication;
 
         $scope.create = function() {
-            accountService.create(this.name, this.address, function(response) {
+            accountService.create(this.name, this.branch, this.sortCode, this.accountNumber, function(response) {
                 $location.path('accounts/' + response._id);
             });
         }
 
         $scope.remove = function() {
-            accountService.remove();
+            accountService.remove($scope.account, function(response) {
+                $location.path('accounts');
+            });
         }
 
         $scope.update = function() {
-            accountService.update($scope.account._id);
+            accountService.update($scope.account, function(response) {
+                $location.path('accounts/' + response._id);
+            });
         }
 
         $scope.find = function() {

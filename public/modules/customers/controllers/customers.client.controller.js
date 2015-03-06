@@ -12,11 +12,15 @@ angular.module('customers').controller('CustomersController', ['$scope', '$state
         }
 
 		$scope.remove = function() {
-            customerService.remove();
+            customerService.remove($scope.customer, function(response) {
+                $location.path('customers');
+            });
         }
 
         $scope.update = function() {
-            customerService.update($scope.customer._id);
+            customerService.update($scope.customer, function(response) {
+                $location.path('customers/' + response._id);
+            });
         }
 
 		$scope.find = function() {

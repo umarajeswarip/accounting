@@ -16,51 +16,39 @@ angular.module('accounts').factory('Accounts', ['$resource',
 angular.module('accounts').service('accountService', ['$resource', 'Accounts',
     function($resource, Accounts) {
         // Create new Account
-        this.create = function() {
+        this.create = function(name, branch, sortCode, accountNumber, responseHandler) {
             // Create new Account object
             var account = new Accounts ({
-                name: this.name,
-                branch:this.branch,
-                sortCode: this.sortCode,
-                accountNumber:this.accountNumber
+                name: name,
+                branch:branch,
+                sortCode: sortCode,
+                accountNumber:accountNumber
             });
-
             // Redirect after save
             account.$save(function(response) {
-                $location.path('accounts/' + response._id);
-
-                // Clear form fields
-                //$scope.name = '';
+                responseHandler(response);
             }, function(errorResponse) {
-                //$scope.error = errorResponse.data.message;
+                console.log(errorResponse);
             });
         };
 
         // Remove existing Account
-        this.remove = function(account) {
+        this.remove = function(account, responseHandler) {
             if ( account ) {
-                account.$remove();
-
-                //for (var i in $scope.accounts) {
-                //    if ($scope.accounts [i] === account) {
-                //        $scope.accounts.splice(i, 1);
-                //    }
-                //}
+                account.$remove( function(response) {
+                    responseHandler(response);
+                });
             } else {
-                //$scope.account.$remove(function() {
-                //    $location.path('accounts');
-                //});
             }
         };
 
         // Update existing Account
-        this.update = function() {
-            var account = $scope.account;
+        this.update = function(account, responseHandler) {
 
-            account.$update(function() {
-                //$location.path('accounts/' + account._id);
+            account.$update(function(response) {
+                responseHandler(response);
             }, function(errorResponse) {
-                //$scope.error = errorResponse.data.message;
+                responseHandler(errorResponse);
             });
         };
 

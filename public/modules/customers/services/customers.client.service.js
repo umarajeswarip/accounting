@@ -28,10 +28,11 @@ angular.module('customers').service('customerService', ['$resource', 'Customers'
                 });
             };
 
-            this.remove = function (customer) {
+            this.remove = function (customer, responseHandler) {
                 if (customer) {
-                    customer.$remove();
-
+                    customer.$remove(function (response) {
+                        responseHandler(response);
+                    });
                 } else {
                     //$scope.customer.$remove(function () {
                     //    $location.path('customers');
@@ -39,8 +40,9 @@ angular.module('customers').service('customerService', ['$resource', 'Customers'
                 }
             };
 
-            this.update = function (customerId) {
-                customer.$update(function () {
+            this.update = function (customer, responseHandler) {
+                customer.$update(function (response) {
+                    responseHandler(response);
                     //$location.path('customers/' + customerId);
                 }, function (errorResponse) {
                     //$scope.error = errorResponse.data.message;
