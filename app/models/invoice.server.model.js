@@ -4,7 +4,10 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+	Schema = mongoose.Schema,
+    autoIncrement = require('mongoose-auto-increment');
+
+autoIncrement.initialize();
 
 /**
  * Invoice Schema
@@ -58,11 +61,13 @@ var InvoiceSchema = new Schema({
             }
         }
     }],
-    otherExpenses :[{
-        rate: {
-            type: Number
-        }
-    }],
+    otherExpenses :{
+        type: Number
+    },
+    vat: {
+        type: Number,
+        ref: 'Vat required'
+    },
 	created: {
 		type: Date,
 		default: Date.now
@@ -72,5 +77,7 @@ var InvoiceSchema = new Schema({
 		ref: 'User'
 	}
 });
+
+InvoiceSchema.plugin(autoIncrement.plugin, { model: 'Invoice', field: 'invoiceNumber' });
 
 mongoose.model('Invoice', InvoiceSchema);

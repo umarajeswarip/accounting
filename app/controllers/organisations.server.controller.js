@@ -96,6 +96,14 @@ exports.organisationByID = function(req, res, next, id) {
 	});
 };
 
+exports.organisationByUserID = function(req, res, next, id) {
+    Organisation.findOne({user:id}).populate('user', 'displayName').exec(function(err, organisation) {
+        if (err) return next(err);
+        if (! organisation) return next(new Error('Failed to load Organisation ' + id));
+        req.organisation = organisation ;
+        next();
+    });
+};
 /**
  * Organisation authorization middleware
  */

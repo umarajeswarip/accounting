@@ -16,4 +16,13 @@ module.exports = function(app) {
 
 	// Finish by binding the Organisation middleware
 	app.param('organisationId', organisations.organisationByID);
+
+    app.route('/organisations-user/:userId')
+        .get(organisations.read)
+        .put(users.requiresLogin, organisations.hasAuthorization, organisations.update)
+        .delete(users.requiresLogin, organisations.hasAuthorization, organisations.delete);
+
+    // Finish by binding the Organisation middleware
+    app.param('userId', organisations.organisationByUserID);
+
 };

@@ -9,6 +9,7 @@
                     <div class="controls">
                         <ul>Accounts: <select ng-model="selectedAccount" ng-options="account.name for account in accounts"></select>  </ul>
                         <ul>Invoice Date: <input ui-date ng-model="invoiceElement.invoiceDate"/></ul>
+                        <ul>Other Expenses: <input ng-model="invoiceElement.otherExpenses" only-digits/></ul>
                         <ul>Customer
                         <select ng-model="selectedCustomer" ng-options="cust.name for cust in customers"></select>  </ul>
                         <ul>StartDate: <input ui-date ng-model="currentInvoiceDetail.startDate"/></ul>
@@ -41,17 +42,17 @@
                         <tfoot>
                         <tr>
                             <th colspan="5">Other Expenses</th>
-                            <th>100</th>
+                            <th>{{invoiceElement.otherExpenses}}</th>
                         </tr>
                         <tr>
                             <th colspan="4"></th>
                             <th>Vat</th>
-                            <th>80</th>
+                            <th>{{invoiceElement.vat}}</th>
                         </tr>
                         <tr>
                             <th colspan="4"></th>
                             <th >Total</th>
-                            <th>480</th>
+                            <th>{{invoiceElement.total}}</th>
                         </tr>
                         </tfoot>
                         <tbody ng-repeat="invoiceDetail in invoiceElement.invoiceDetails track by $index">

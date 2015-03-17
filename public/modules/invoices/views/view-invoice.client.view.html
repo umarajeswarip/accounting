@@ -2,63 +2,84 @@
 	<div class="page-header">
 		<h1 data-ng-bind="invoice.name"></h1>
 	</div>
-	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == invoice.user._id))">
-		<a class="btn btn-primary" href="/#!/invoices/{{invoice._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-	</div>
 	<small>
 		<em class="text-muted">
             <div class="form-group">
-                <div class="controls">
-                    <ul>Invoice Date:  {{invoice.invoiceDate | date : "dd/MM/yyyy"}}</ul>
-                    <ul>Account:  {{invoice.account.name}}</ul>
+                <div ui-layout>
+                    <div ui-layout-container resizable="false">
+                        <h4 class="text-center">{{invoice.organisation.name}}</h4>
+                        <h4 class="text-center">{{invoice.organisation.address.addressLine1}}</h4>
+                        <h4 class="text-center">{{invoice.organisation.address.city}}</h4>
+                        <h4 class="text-center">{{invoice.organisation.address.postCode}}</h4>
+                    </div>
+                    <div ui-layout-container resizable="false">
+                        <h4 class="text-right">Date: {{invoice.invoiceDate | date : "dd/MM/yyyy"}}</h4>
+                        <h4 class="text-right">Invoice Number: {{invoice.invoiceNumber}}</h4>
+                        <h4 class="text-right">VAT NO: {{invoice.organisation.vatNumber}}</h4>
+                        <h4 class="text-right">Company Number: {{invoice.organisation.companyNumber}}</h4>
+                    </div>
+                    <div ui-layout-container resizable="false">
+                        <div>
+                            <table id="example" class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Client</th>
+                                    <th>Period Start</th>
+                                    <th>Period End</th>
+                                    <th>No. of Days</th>
+                                    <th>Rate</th>
+                                    <th>Amount</th>
+                                </tr>
+                                </thead>
+
+                                <tfoot>
+                                <tr>
+                                    <th colspan="5">Other Expenses</th>
+                                    <th>{{invoice.otherExpenses}}</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="4"></th>
+                                    <th>Vat</th>
+                                    <th>{{invoice.vat}}</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="4"></th>
+                                    <th >Total</th>
+                                    <th>{{invoice.total}}</th>
+                                </tr>
+                                </tfoot>
+                                <tbody ng-repeat="invoiceDetail in invoice.invoiceDetails track by $index">
+                                <tr>
+                                    <td>{{invoiceDetail.customer.name}}</td>
+                                    <td>{{invoiceDetail.startDate | date : "dd/MM/yyyy"}}</td>
+                                    <td>{{invoiceDetail.endDate | date : "dd/MM/yyyy"}}</td>
+                                    <td>{{invoiceDetail.noOfDays}}</td>
+                                    <td>{{invoiceDetail.rate}}</td>
+                                    <td>{{invoiceDetail.total}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div ui-layout-container resizable="false">
+                        <h4 class="text-left">Bank Name: {{invoice.account.name}}</h4>
+                        <h4 class="text-left">A/C No.: {{invoice.account.accountNumber}}</h4>
+                        <h4 class="text-left">A/C No.: {{invoice.account.branch}}</h4>
+                        <h4 class="text-left">A/C No.: {{invoice.account.sortCode}}</h4>
+                        <button class="btn btn-default btn-xs" ng-click="generatePdf()">Generate Pdf</button>
+                    </div>
+                    <div ui-layout-container resizable="false">
+                        <div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == invoice.user._id))">
+                            <a class="btn btn-primary" href="/#!/invoices/{{invoice._id}}/edit">
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </a>
+                            <a class="btn btn-primary" data-ng-click="remove();">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div>
-                <table id="example" class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>Client</th>
-                        <th>Period Start</th>
-                        <th>Period End</th>
-                        <th>No. of Days</th>
-                        <th>Rate</th>
-                        <th>Amount</th>
-                    </tr>
-                    </thead>
-
-                    <tfoot>
-                    <tr>
-                        <th colspan="5">Other Expenses</th>
-                        <th>100</th>
-                    </tr>
-                    <tr>
-                        <th colspan="4"></th>
-                        <th>Vat</th>
-                        <th>{{invoice.total * 20 / 100}}</th>
-                    </tr>
-                    <tr>
-                        <th colspan="4"></th>
-                        <th >Total</th>
-                        <th>{{invoice.total + (invoice.total * 20 / 100)}}</th>
-                    </tr>
-                    </tfoot>
-                    <tbody ng-repeat="invoiceDetail in invoice.invoiceDetails track by $index">
-                    <tr>
-                        <td>{{invoiceDetail.customer.name}}</td>
-                        <td>{{invoiceDetail.startDate | date : "dd/MM/yyyy"}}</td>
-                        <td>{{invoiceDetail.endDate | date : "dd/MM/yyyy"}}</td>
-                        <td>{{invoiceDetail.noOfDays}}</td>
-                        <td>{{invoiceDetail.rate}}</td>
-                        <td>{{invoiceDetail.total}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-		</em>
+        </em>
 	</small>
 </section>

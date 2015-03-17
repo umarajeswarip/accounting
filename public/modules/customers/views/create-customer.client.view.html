@@ -6,15 +6,15 @@
 		<form name="customerForm" class="form-horizontal" data-ng-submit="create()" novalidate>
 			<fieldset>
 				<div class="form-group" ng-class="{ 'has-error': customerForm.title.$dirty && customerForm.title.$invalid }">
-					<label class="control-label" for="title">Name</label>
+					<label class="control-label" for="name">Name</label>
 					<div class="controls">
 						<input name="name" type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label" for="content">Address</label>
+					<label class="control-label" for="address">Address</label>
 					<div class="controls">
-						<textarea name="Address" data-ng-model="address" id="content" class="form-control" cols="30" rows="10" placeholder="Address"></textarea>
+						<textarea name="Address" data-ng-model="address" id="address" class="form-control" cols="30" rows="10" placeholder="Address"></textarea>
 					</div>
 				</div>
 				<div class="form-group">
