@@ -44,7 +44,7 @@ angular.module('expenses').controller('ExpensesController', ['$scope', '$statePa
             if (index == -1) {
                 return;
             }
-            $scope.expenses1.splice(index);
+            $scope.expenses1.splice(index, 1);
         }
 		// Create new Expense
 		$scope.create = function() {

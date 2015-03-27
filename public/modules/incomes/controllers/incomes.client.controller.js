@@ -34,7 +34,7 @@ angular.module('incomes').controller('IncomesController', ['$scope', '$statePara
             if (index == -1) {
                 return;
             }
-            $scope.incomeMems.splice(index);
+            $scope.incomeMems.splice(index, 1);
         }
 
 		// Create new Income

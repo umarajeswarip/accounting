@@ -52,65 +52,8 @@ angular.module('invoices').controller('InvoicesController', ['$scope', '$statePa
 
 		// Find a list of Invoices
 		$scope.find = function() {
-
-            var a = moment('2013-01-01');
-            var b = moment('2013-06-01');
-            var milage = {
-                startDate: moment('2015-04-01'),
-                endDate: moment('2015-04-30'),
-                startPoint: 'Bexley',
-                endPoint: 'Faversham',
-                miles: 43
-            }
-
-            var milageEntry = [];
-            var yearlyMilage = {
-                year : 2015,
-                total: 9700
-            }
-
-            var bankHolildays = {
-                year : 2015,
-                dates : [moment('2015-01-01'), moment('2015-04-03'), moment('2015-04-06'), moment('2015-05-04'),
-                         moment('2015-05-25'),moment('2015-07-31'),moment('2015-12-25'),moment('2015-12-28')]
-            }
-
-            var totalMilage = yearlyMilage.total;
-            var fullRate = 0.45;
-            var reducedRate = 0.20;
-            var limit = 10000;
-            var rate = fullRate;
-
-            for (var milageDate = milage.startDate; milageDate.isBefore(milage.endDate); milageDate.add(1, 'days')) {
-                var dateToProcess = milageDate.clone();
-                if (isWeekDay(dateToProcess) && !isBankHoliday(dateToProcess, bankHolildays.dates)) {
-                    if ((( totalMilage < limit) && (totalMilage + milage.miles)> limit) || totalMilage > limit) {
-                        rate = reducedRate;
-                    }
-                    milageEntry.push({date : dateToProcess, startPoint : milage.startPoint, endPoint : milage.endPoint, miles: milage.miles, cost: (rate * milage.miles)})
-                    milageEntry.push({date : dateToProcess, startPoint : milage.endPoint, endPoint : milage.startPoint, miles: milage.miles, cost: (rate * milage.miles)})
-                    totalMilage += (milage.miles * 2);
-                }
-            }
-            console.log(milageEntry);
 			$scope.invoices = Invoices.query();
 		};
-
-        function isBankHoliday(m, dates) {
-            for (var i =0; i < dates.length; i++) {
-                if (m.isSame(dates[i])) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        function isWeekDay(m) {
-            var dayOfWeek = m.isoWeekday();
-            if (dayOfWeek == 6 || dayOfWeek == 7) {
-                return false;
-            }
-            return true;
-        }
 
 		// Find existing Invoice
 		$scope.findOne = function() {

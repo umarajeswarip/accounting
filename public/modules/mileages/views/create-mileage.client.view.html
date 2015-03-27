@@ -1,0 +1,62 @@
+<section data-ng-controller="MileagesController">
+    <div class="page-header">
+        <h1>New Mileage</h1>
+    </div>
+    <div class="col-md-12">
+        <h4><a href="#" ng-click="showDetails = ! showDetails">Generate Mileage</a></h4>
+        <div class="form-group">
+            <form class="form-horizontal" data-ng-submit="generateMileage()" novalidate>
+                <div class="procedure-details" ng-show="showDetails">
+                    <ul>Period: <input ui-date ng-model="mileageQuery.date" /></ul>
+                    <ul>Start Point: <input ng-model="mileageQuery.startPoint" /></ul>
+                    <ul>End Point: <input ng-model="mileageQuery.endPoint" /></ul>
+                    <ul>Miles: <input ng-model="mileageQuery.miles" only-digits/></ul>
+                    <button type="button" class="btn btn-default btn-xs" ng-click="generateMileage()">Generate</button>
+                </div>
+            </form>
+        </div>
+        <div class="form-group">
+            <h4><a href="#" ng-click="showAddMileageDetails = ! showAddMileageDetails">Add Mileage</a></h4>
+            <form class="form-horizontal" data-ng-submit="addMileage()" novalidate>
+                <div class="procedure-details" ng-show="showAddMileageDetails">
+                    <ul>StartDate: <input ui-date ng-model="addMileageQuery.date" /></ul>
+                    <ul>Start Point: <input ng-model="addMileageQuery.startPoint" /></ul>
+                    <ul>End Point: <input ng-model="addMileageQuery.endPoint" /></ul>
+                    <ul>Miles: <input ng-model="addMileageQuery.miles" only-digits/></ul>
+                    <button type="button" class="btn btn-default btn-xs" ng-click="addMileage()">Generate</button>
+                </div>
+            </form>
+        </div>
+        <div class="form-group">
+            <table ng-table="tableParams" class="table">
+                <tr ng-repeat="mileageEntry in mileagesInMem" track by $index>
+                    <td data-title="'Date'" sortable="date">
+                        {{mileageEntry.date | date : "dd/MM/yyyy"}}
+                    </td>
+                    <td data-title="'StartPoint'" sortable="startPoint">
+                        {{mileageEntry.startPoint}}
+                    </td>
+                    <td data-title="'EndPoint'" sortable="endPoint">
+                        {{mileageEntry.endPoint}}
+                    </td>
+                    <td data-title="'Miles'" sortable="miles">
+                        {{mileageEntry.miles}}
+                    </td>
+                    <td data-title="'Cost'" sortable="cost">
+                        {{mileageEntry.cost}}
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" data-ng-click="editExpense($index);">
+                            <i class="glyphicon glyphicon-edit"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" data-ng-click="removeMileage($index);">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>

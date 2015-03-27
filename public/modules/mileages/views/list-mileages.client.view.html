@@ -1,0 +1,19 @@
+<section data-ng-controller="MileagesController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Mileages</h1>
+    </div>
+    <div class="list-group">
+        <a data-ng-repeat="mileage in mileages" data-ng-href="#!/mileages/{{mileage._id}}" class="list-group-item">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="mileage.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="mileage.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="mileage.name"></h4>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!mileages.$resolved || mileages.length">
+    	No Mileages yet, why don't you <a href="/#!/mileages/create">create one</a>?
+    </div>
+</section>
